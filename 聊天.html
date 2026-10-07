@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>简易本地聊天室</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            width: 480px;
+            margin: 40px auto;
+            font-family: system-ui, sans-serif;
+        }
+        /* 聊天外层大框 */
+        .chat-container {
+            border: 2px solid #555;
+            min-height: 420px;
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 14px;
+            overflow-y: auto;
+        }
+        /* 单条消息方框 */
+        .message {
+            border: 1px solid #333;
+            padding: 9px 14px;
+            margin: 8px 0;
+            border-radius: 6px;
+        }
+        /* 输入区域布局 */
+        .input-area {
+            display: flex;
+            gap:8px;
+        }
+        #msgInput {
+            flex:1;
+            padding:10px;
+            font-size:16px;
+            border:1px solid #444;
+            border-radius:6px;
+        }
+        #sendBtn {
+            padding:10px 18px;
+            font-size:16px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container" id="chatBox">
+        <div class="message">欢迎来到聊天室！</div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="msgInput" placeholder="在这里输入消息...">
+        <button id="sendBtn">发送</button>
+    </div>
+
+    <script>
+        // 获取元素
+        const chatBox = document.getElementById('chatBox');
+        const msgInput = document.getElementById('msgInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // 发送消息函数
+        function sendMessage() {
+            const text = msgInput.value.trim();
+            if(text === "") return; // 空消息不发送
+            // 创建消息盒子
+            const newMsg = document.createElement('div');
+            newMsg.className = "message";
+            newMsg.innerText = text;
+            // 添加到聊天框
+            chatBox.appendChild(newMsg);
+            // 滚动到底部，看到最新消息
+            chatBox.scrollTop = chatBox.scrollHeight;
+            // 清空输入框
+            msgInput.value = "";
+        }
+
+        // 点击按钮发送
+        sendBtn.onclick = sendMessage;
+        // 按回车也可以发送
+        msgInput.onkeydown = function(e){
+            if(e.key === "Enter"){
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
